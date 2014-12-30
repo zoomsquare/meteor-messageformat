@@ -1,8 +1,8 @@
 Package.describe({
-  name:    "gadicohen:messageformat",
+  name:    "oaf:messageformat",
   version: "0.0.47",
   summary: "MessageFormat support, the Meteor way",
-  git:      "https://github.com/gadicc/meteor-messageformat.git",
+  git:      "https://github.com/oafmedium/meteor-messageformat.git",
 });
 
 Npm.depends({
@@ -61,4 +61,3 @@ Package.on_use(function (api) {
 
 	api.export(['mfPkg', 'mf'], ['client', 'server']);
 });
-
