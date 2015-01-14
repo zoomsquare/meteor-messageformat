@@ -133,7 +133,7 @@ function processHtml(file, data) {
 		logKey(file, key, text, file, line);
 		strings[key] = {
 			key: key,
-			text: text,
+			text: text.replace(/\uFFFD/g, ''),
 			file: file,
 			line: line,
 			template: tpl ? tpl[2] : 'unknown'
@@ -150,7 +150,7 @@ function processHtml(file, data) {
 		logKey(file, key, text, file, line);
 		strings[key] = {
 			key: key,
-			text: text,
+			text: text.replace(/\uFFFD/g, ''),
 			file: file,
 			line: line,
 			template: tpl ? tpl[2] : 'unknown'
@@ -215,7 +215,7 @@ function processJS(file, data) {
 		logKey(file, key, text, file, line);
 		strings[key] = {
 			key: key,
-			text: text,
+			text: text.replace(/\uFFFD/g, ''),
 			file: file,
 			line: line,
 			func: func ? func[1].replace(/^\s+|\s+$/g, '') : 'unknown'
@@ -230,9 +230,9 @@ function processCoffee(file, data) {
     // function blah(), blah = function(), helper('moo', function() {...
     // mf('test_key', params, 'test_text')
 
-    re = /mf\s*\(\s*(['"])(.*?)\1\s*,\s*.*?\s*,\s*(['"])(.*?)\3,?.*?\)/g;
+	re = /mf\s*\(\s*(['"])(.*?)\1\s*,(\s*.*?\s*,)??\s*(['"])(.*?)\4(,.*?)?\)/g;
     while (result = re.exec(data)) {
-        var key = result[2], text = result[4], attributes = attrDict(result[5]);
+        var key = result[2], text = result[5];
 
         var func = 'unknown'
         var func_re = /(^|\n+)(.*[-=][>])/g
@@ -244,7 +244,7 @@ function processCoffee(file, data) {
         logKey(file, key, text, file, line);
         strings[key] = {
             key: key,
-            text: text,
+            text: text.replace(/\uFFFD/g, ''),
             file: file,
             line: line,
             func: func
